@@ -35,13 +35,16 @@
 """
 from datetime import datetime
 
-def accaunt():
+total_cash = 0.0
+history = {}
 
-    total_cash = 0.0
-    history = {}
+def to_deposit(total_cash, cash):
+    return total_cash + cash
 
+def account(total_cash, history):
     while True:
-        print('Мой банковский счет:\n')
+        print('Мой банковский счет')
+        print('-'*30)
         print('1. пополнение счета')
         print('2. покупка')
         print('3. история покупок')
@@ -52,20 +55,21 @@ def accaunt():
         choice = input('Выберите пункт меню: ')
         # пополнение счета
         if choice == '1':
-            total_cash += float(input(
+            cash = float(input(
                 f'На текущий момент на Вашем счете {total_cash} усл.ед. \nНа какую сумму Вы хотите пополнить счет: '))
-            continue
+            total_cash = to_deposit(total_cash, cash)
+
         # покупка
         elif choice == '2':
             price_bag = float(input('Введите сумму покупки: '))
             if price_bag > total_cash:
-                print('К сожалению на Вашем счете недостаточно денег: ')
+                print('К сожалению у Вас недостаточно средств')
                 print('-' * 30)
             else:
-                bag = input('Название покупки: ')
-                # В историю записывается инф в  виде словаря {время: название покупки и цена}
-                history[str(datetime.now().time())] = (bag, price_bag)
+                bag = input('Введине название покупки: ')
+                history[str(datetime.now().time())] = bag, price_bag
                 total_cash -= price_bag
+
         # история покупок
         elif choice == '3':
             if history == {}:
@@ -74,7 +78,7 @@ def accaunt():
                 print()
                 print('{} {:>15} {}'.format('Дата покупки', 'Товар', 'Стоимость'))
                 for k, v in history.items():
-                    print(f'{k} {v}')
+                    print(f'{k}       {v}')
         # запросить баланс
         elif choice == '4':
             print(f'Баланс: {total_cash}')
@@ -84,3 +88,6 @@ def accaunt():
             break
         else:
             print('Неверный пункт меню')
+
+if __name__ == '__main__':
+    account(total_cash, history)

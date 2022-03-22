@@ -44,13 +44,15 @@ members_dict = {'Алекса́ндр Серге́евич Пу́шкин': '26.
                 'Иван Александрович Гончаров': '18.06.1812',
                 'Алекса́ндр Серге́евич Грибое́дов': '15.01.1795'}
 
+def get_5famous(famous_dict, k):
+    return random.sample(list(famous_dict), k)
+
 def victory():
     count = 1
     while True:
-        winners_list = random.sample(list(members_dict), 5)
+        winners_list = get_5famous(list(members_dict), 5)
         true_count = 0
         for people in winners_list:
-            data_text = ''
             data_propis = members_dict[people].split('.')
             data_text = d_ls[int(data_propis[0]) - 1] + ' ' + m_ls[int(data_propis[1]) - 1] + ' ' + data_propis[2] + ' года'
             data = input(f'Угадайте дату рождения {count} победителя {people}: ')
@@ -68,3 +70,7 @@ def victory():
         # предложение сыграть снова
         if input('Для продолжения нажмите любую клавишу (для выхода q) ').lower() == 'q':
             break
+
+
+if __name__ == "__main__":
+    victory()

@@ -5,6 +5,7 @@ import shutil
 import platform
 from games.victory import victory
 from games.account import accaunt
+from func.functions import *
 
 CREATOR = 'Pavel & Co'
 OLD_DIR = os.getcwd()
@@ -29,70 +30,38 @@ while True:
     choice = input('Выберите пункт меню: ')
     # Создать папку
     if choice == '1':
-        print(f'Содержимое дериктории {os.getcwd()}:')
-        folder_name = input('Введине название папки: ')
-        if not os.path.exists(os.path.join(os.getcwd(), folder_name)):
-            os.mkdir(folder_name)
-            print(f'Создана папка {os.path.join(os.getcwd(), folder_name)}')
-        else:
-            print(f'Папка с именем {folder_name} уже существует')
-        input('Для продолжения нажмите любую клавишу ...')
+        create_folder()
+        wait_input()
     # Удалить (файл/папку)
     if choice == '2':
-        rm_folder_or_file = input('Введите название папки или файла: ')
-        if os.path.exists(rm_folder_or_file):
-            if '.' in rm_folder_or_file:
-                os.remove(rm_folder_or_file)
-                print(f'Файл с именем {rm_folder_or_file} был удален')
-            else:
-                os.rmdir(rm_folder_or_file)
-                print(f'Папка с именем {rm_folder_or_file} была удалена')
-        else:
-            print(f'Указанной Вами файла/папки не существует')
-        input('Для продолжения нажмите любую клавишу ...')
+        delete_file_folder()
+        wait_input()
     # Копировать (файл/папку)
     if choice == '3':
-        folder_or_file_old = input('Введите старое название папки или файла: ')
-        if os.path.exists(folder_or_file_old):
-            if '.' in folder_or_file_old:
-                folder_or_file_new = input('Введите новое название файла: ')
-                shutil.copy(folder_or_file_old, folder_or_file_new)
-                print(f'Была создана копия файла {folder_or_file_old} на {folder_or_file_new}')
-            else:
-                folder_or_file_new = input('Введите новое название папки: ')
-                shutil.copytree(folder_or_file_old, folder_or_file_new)
-                print(f'Была создана копия папки {folder_or_file_old} на {folder_or_file_new}')
-        else:
-            print(f'Указанной Вами файла/папки не существует')
-        input('Для продолжения нажмите любую клавишу ...')
+        copy_file_folder()
+        wait_input()
     # Просмотр содержимого рабочей директории
     if choice == '4':
         print(f'Содержимое дериктории {os.getcwd()}:')
         print(os.listdir(os.getcwd()))
-        input('Для продолжения нажмите любую клавишу ...')
+        wait_input()
     # Посмотреть только папки
     if choice == '5':
-        print(f'Содержимое папок дериктории {os.getcwd()}:')
-        paths = [path for path in list(os.walk(os.getcwd()))[:1]]
-        _, folders, _ = paths[0]
-        print(folders)
-        input('Для продолжения нажмите любую клавишу ...')
+        print(look_only_folder())
+        wait_input()
     # Посмотреть только файлы
     if choice == '6':
-        print(f'Содержимое файлов дериктории {os.getcwd()}:')
-        paths = [path for path in list(os.walk(os.getcwd()))[:1]]
-        _, _, files = paths[0]
-        print(files)
-        input('Для продолжения нажмите любую клавишу ...')
+        print(look_only_files())
+        wait_input()
     # Просмотр информации об операционной системе
     if choice == '7':
         print('Информации об операционной системе:')
         for i in platform.uname():
             print(i)
-        input('Для продолжения нажмите любую клавишу ...')
+        wait_input()
     if choice == '8':
         print('Разработчик программного продукта "Консольный файловый менеджер": ', CREATOR)
-        input('Для продолжения нажмите любую клавишу ...')
+        wait_input()
     # Играть в викторину'
     if choice == '9':
         print('Вы выбрали меню играть в викторину')
@@ -109,12 +78,12 @@ while True:
         path_dir = input('Директория: ')
         os.chdir(path_dir)
         print(f'Текущая директория: {os.getcwd()}')
-        input('Для продолжения нажмите любую клавишу ...')
+        wait_input()
     # выход из программы
     if choice == '12':
         print('Возврат к исходной директории ... ')
         os.chdir(OLD_DIR)
         print(f'Текущая директория: {os.getcwd()}')
-        input('Для продолжения нажмите любую клавишу ...')
+        wait_input()
     if choice == '13':
         exit()

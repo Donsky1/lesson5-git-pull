@@ -34,17 +34,48 @@
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
 from datetime import datetime
+import os
+import json
+import sys
 
-total_cash = 0.0
-history = {}
+BALANCE = os.path.join(sys.path[1], 'games', 'data', 'balance.txt')
+HISTORY = os.path.join(sys.path[1], 'games', 'data', 'history.json')
+
+
+def open_session_balance(BALANCE):
+    """
+    function to download balance.
+    open at start program
+    """
+    if os.path.exists(BALANCE):
+        with open(BALANCE, 'r') as f:
+            return float(f.read())
+    else:
+        return 0.0
+
+
+def open_session_history(HISTORY):
+    """
+    function to download history.
+    open at start program
+    """
+    if os.path.exists(HISTORY):
+        with open(HISTORY, 'r') as f:
+            return dict(json.load(f))
+    else:
+        return {}
+
 
 def to_deposit(total_cash, cash):
+    """function to update balance."""
     return total_cash + cash
 
+
+# main function
 def account(total_cash, history):
     while True:
-        print('Мой банковский счет')
-        print('-'*30)
+        print(f'Мой банковский счет. Баланс {total_cash}')
+        print('-' * 30)
         print('1. пополнение счета')
         print('2. покупка')
         print('3. история покупок')
@@ -76,7 +107,7 @@ def account(total_cash, history):
                 print('Вы еще не совершали покупок')
             else:
                 print()
-                print('{} {:>15} {}'.format('Дата покупки', 'Товар', 'Стоимость'))
+                print('{} {:>15}    {}'.format('Дата покупки', 'Товар', 'Стоимость'))
                 for k, v in history.items():
                     print(f'{k}       {v}')
         # запросить баланс
@@ -84,10 +115,22 @@ def account(total_cash, history):
             print(f'Баланс: {total_cash}')
         # выход
         elif choice == '5':
+            # сохраниене суммы счета
+            with open(BALANCE, 'w') as f:
+                f.write(str(total_cash))
+            # сохраниене истории покупок
+            with open(HISTORY, 'w') as f:
+                json.dump(history, f)
             # exit()
             break
         else:
             print('Неверный пункт меню')
 
+
 if __name__ == '__main__':
+    # При запуске программы проиходит загрузка инф. о балансе счета
+    total_cash = open_session_balance(BALANCE)
+    # При запуске программы проиходит загрузка инф. об истории покупок ранее
+    history = open_session_history(HISTORY)
+    # запуск основной программы
     account(total_cash, history)

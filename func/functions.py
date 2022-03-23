@@ -53,3 +53,15 @@ def look_only_files():
     paths = [path for path in list(os.walk(os.getcwd()))[:1]]
     _, _, files = paths[0]
     return files
+
+# функция сохр содержимого рабочей директории в файл listdir.txt
+def create_list_dir():
+    paths = [path for path in list(os.walk(os.getcwd()))[:1]]
+    _, folders, files = paths[0]
+    folders_str = 'dir: ' + ', '.join(folders) + '\n'
+    files_str = 'files: ' + ', '.join(files) + '\n'
+
+    with open(os.path.join('games', 'data', 'listdir.txt'), 'w') as f:
+        f.write(files_str)
+        f.write(folders_str)
+    return 'Содержимое рабочей директории сохранено', os.path.join('games', 'data', 'listdir.txt')

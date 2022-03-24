@@ -80,3 +80,7 @@ def test_create_list_dir():
     assert create_list_dir()[0] == 'Содержимое рабочей директории сохранено'
     assert os.path.isfile(create_list_dir()[1])
     assert os.path.getsize(create_list_dir()[1]) > 0
+
+
+def test_check_name_folder_or_file():
+    assert check_name_folder_or_file('123') == False

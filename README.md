@@ -5,6 +5,8 @@
 
 ![image](https://user-images.githubusercontent.com/63307876/159649120-c57ff674-8108-496f-b6ae-1c1cac34e2c3.png)
 
+![image](https://user-images.githubusercontent.com/63307876/159939159-8c9d6b04-0a74-48ec-91c3-476b06dc7ad8.png)
+
 
 Модули и пакеты
 
